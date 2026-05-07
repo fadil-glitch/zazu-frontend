@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zazu Media</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <section id="welcome" class="screen active">
+      <h1>🦅 Zazu Digital Elder</h1>
+      <p id="greet">Loading...</p>
+      <button id="btn-wallet" class="primary">💰 Go to Wallet</button>
+    </section>
+
+    <section id="wallet" class="screen">
+      <h2>💰 Your Wallet</h2>
+      <div class="bal">₦<span id="bal-val">0.00</span></div>
+      <button id="btn-play" class="primary">📺 Play Test Stream</button>
+      <button id="btn-back" class="text-btn">← Back</button>
+    </section>
+
+    <section id="player" class="screen">
+      <div class="player-box">
+        <video id="vid" controls playsinline disablepictureinpicture controlsList="nodownload"></video>
+        <div id="wm" class="watermark"></div>
+      </div>
+      <p class="info">📡 Forensic watermark active. Recording leaks are traceable.</p>
+      <button id="btn-stop" class="text-btn">← Stop & Return</button>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
