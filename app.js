@@ -2,7 +2,7 @@ const tg = window.Telegram.WebApp;
 tg.expand(); tg.enableClosingConfirmation();
 
 // 🔁 REPLACE WITH YOUR ACTUAL RENDER URL BEFORE DEPLOYING
-const API = "https://YOUR-RENDER-URL.onrender.com";
+const API = "https://zazu-backend-uxjr.onrender.com";
 
 const els = {
   screens: { w: document.getElementById('welcome'), wal: document.getElementById('wallet'), p: document.getElementById('player') },
