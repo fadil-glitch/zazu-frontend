@@ -1,6 +1,5 @@
 const tg = window.Telegram.WebApp;
 tg.expand(); tg.enableClosingConfirmation();
-
 // 🔁 REPLACE WITH YOUR ACTUAL RENDER URL BEFORE DEPLOYING
 const API = "https://zazu-backend-uxjr.onrender.com";
 
