@@ -1,6 +1,6 @@
 const tg = window.Telegram.WebApp;
 tg.expand(); tg.enableClosingConfirmation();
-// 🔁 REPLACE WITH YOUR ACTUAL RENDER URL BEFORE DEPLOYING
+
 const API = "https://zazu-backend-uxjr.onrender.com";
 
 const els = {
@@ -24,12 +24,23 @@ async function init() {
   } catch (e) { show('w'); }
 }
 
-function startStream() {
+// Make all channel buttons work
+document.querySelectorAll('.channel-btn').forEach(btn => {
+  btn.onclick = () => {
+    const url = btn.getAttribute('data-url');
+    if (url) startStream(url);
+  };
+});
+
+document.getElementById('btn-back').onclick = () => show('w');
+document.getElementById('btn-stop').onclick = () => { if(hls) hls.destroy(); hls=null; els.vid.src=''; show('wal'); };
+
+function startStream(streamUrl) {
   show('p');
   const updateWm = () => els.wm.textContent = `ZAZU:${tg.initDataUnsafe.user.id}|${new Date().toLocaleTimeString()} `;
   updateWm(); setInterval(updateWm, 1500);
 
-  const src = "https://live-hls-web-aje.getaj.net/AJE/index.m3u8";
+  const src = streamUrl;
   if (Hls.isSupported()) {
     hls = new Hls({ enableWorker: true, lowLatencyMode: false });
     hls.loadSource(src); hls.attachMedia(els.vid);
@@ -38,10 +49,5 @@ function startStream() {
     els.vid.src = src; els.vid.play();
   }
 }
-
-document.getElementById('btn-wallet').onclick = () => show('wal');
-document.getElementById('btn-back').onclick = () => show('w');
-document.getElementById('btn-play').onclick = startStream;
-document.getElementById('btn-stop').onclick = () => { if(hls) hls.destroy(); hls=null; els.vid.src=''; show('wal'); };
 
 document.addEventListener('DOMContentLoaded', init);
