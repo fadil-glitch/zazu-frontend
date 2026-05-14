@@ -49,7 +49,7 @@ function startStream(url) {
   }
 }
 
-document.getElementById('btn-play-bunny').onclick = () => startStream('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+document.getElementById('btn-play-bunny').onclick = () => startStream('https://www.w3schools.com/html/mov_bbb.mp4');
 document.getElementById('btn-play-aljazeera').onclick = () => startStream('https://live-hls-web-aje.getaj.net/AJE/index.m3u8');
 document.getElementById('btn-stop').onclick = () => {
   if(hls) hls.destroy(); hls=null; els.vid.src='';
