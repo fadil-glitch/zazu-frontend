@@ -1,7 +1,7 @@
 const tg = window.Telegram.WebApp;
 tg.expand(); tg.enableClosingConfirmation();
 
-const API = "https://zazu-backend-uxjr.onrender.com";
+const API = "https://zazu-backend-1.onrender.com";
 
 const els = {
   screens: { w: document.getElementById('welcome'), wal: document.getElementById('wallet'), p: document.getElementById('player') },
