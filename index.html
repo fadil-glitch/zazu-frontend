@@ -10,26 +10,24 @@
 </head>
 <body>
   <div id="app">
-    <section id="welcome" class="screen active">
-      <h1>🦅 Zazu Digital Elder</h1>
-      <p id="greet">Loading...</p>
-      <button id="btn-wallet" class="primary">💰 Go to Wallet</button>
+    <!-- Wallet Screen (shown immediately) -->
+    <section id="wallet" class="screen active">
+      <h2>💰 Your Wallet</h2>
+      <div class="bal">₦<span id="bal-val">0.00</span></div>
+      <button id="btn-play-bunny" class="primary">📺 Bunny Test (Mini App)</button>
+      <button class="secondary" onclick="window.open('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', '_blank')">📺 Open in Chrome</button>
+      <button id="btn-play-aljazeera" class="secondary">📺 Al Jazeera</button>
+      <button id="btn-back" class="text-btn" style="display:none;">← Back</button>
     </section>
-<section id="wallet" class="screen">
-  <h2>💰 Your Wallet</h2>
-  <div class="bal">₦<span id="bal-val">0.00</span></div>
-  <p style="text-align:center;margin-top:8px;">Choose a test channel:</p>
-  <button class="primary channel-btn" data-url="https://live-hls-web-aje.getaj.net/AJE/index.m3u8">📺 Al Jazeera</button>
-  <button class="primary channel-btn" data-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">📺 Bunny Test</button>
-  <button id="btn-back" class="text-btn">← Back</button>
-</section>
-    <section id="player" class="screen">
+
+    <!-- Hidden Video Player -->
+    <section id="player" class="screen hidden">
       <div class="player-box">
         <video id="vid" controls playsinline disablepictureinpicture controlsList="nodownload"></video>
         <div id="wm" class="watermark"></div>
       </div>
-      <p class="info">📡 Forensic watermark active. Recording leaks are traceable.</p>
-      <button id="btn-stop" class="text-btn">← Stop & Return</button>
+      <p class="info">Forensic watermark active</p>
+      <button id="btn-stop" class="text-btn">← Stop &amp; Return</button>
     </section>
   </div>
   <script src="app.js"></script>
