@@ -54,7 +54,7 @@
       const u = tg.initDataUnsafe?.user;
       if (!u) { document.getElementById('bal-val').textContent = "0.00"; return; }
       try {
-        const res = await fetch(API + '/api/user/' + u.id, { headers: { Authorization: 'Bearer ' + tg.initData } });
+        const res = await fetch(API + '/api/user/' + u.id + '?t=' + Date.now()) { headers: { Authorization: 'Bearer ' + tg.initData } });
         if (res.ok) {
           const data = await res.json();
           document.getElementById('bal-val').textContent = (data.balance_kobo/100).toFixed(2);
@@ -65,7 +65,7 @@
     async function loadChannels() {
       const container = document.getElementById('channel-list');
       try {
-        const res = await fetch(API + '/api/channels');
+        const res = await fetch(API + '/api/channels?t=' + Date.now());
         if (res.ok) {
           const data = await res.json();
           const channels = data.channels || [];
