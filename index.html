@@ -27,14 +27,22 @@
     <h2>💰 Your Wallet</h2>
     <div class="bal">₦<span id="bal-val">0.00</span></div>
 
+    <p style="text-align:center; margin-top:16px;"><strong>Test Stream</strong></p>
     <button class="primary" onclick="playVideo('https://www.w3schools.com/html/mov_bbb.mp4')">📺 Test Video (Mini App)</button>
     <button class="secondary" onclick="window.open('https://www.w3schools.com/html/mov_bbb.mp4', '_blank')">📺 Test Video (Chrome)</button>
 
-    <button class="primary" onclick="playVideo('https://live-hls-web-aje.getaj.net/AJE/index.m3u8')">📺 Al Jazeera (Mini App)</button>
-    <button class="secondary" onclick="window.open('https://live-hls-web-aje.getaj.net/AJE/index.m3u8', '_blank')">📺 Al Jazeera (Chrome)</button>
+    <p style="text-align:center; margin-top:16px;"><strong>Live Channels (HLS)</strong></p>
+    <button class="primary" onclick="playVideo('https://bit.ly/Arewa24-Live-HLS')">📺 Arewa 24 (Hausa)</button>
+    <button class="primary" onclick="playVideo('https://live.presstv.ir/hls/test.m3u8')">📺 Press TV</button>
+    <button class="primary" onclick="playVideo('https://live-hls-web-aje.akamaized.net/m3u8/aje.m3u8')">📺 Al Jazeera English</button>
+    <button class="primary" onclick="playVideo('https://bit.ly/ChannelsTV-Live-M3U8')">📺 Channels TV (Nigeria)</button>
+    <button class="primary" onclick="playVideo('https://tv-trtworld.medyahizmetleri.com/index.m3u8')">📺 TRT World</button>
+    <button class="primary" onclick="playVideo('https://static.france24.com/live/f24_en.error/playlist.m3u8')">📺 France 24</button>
 
-    <button class="primary" onclick="playVideo('https://video1.getstreamhosting.com:1936/pexrejaeyz/pexrejaeyz/playlist.m3u8')">📺 HMTV (Mini App)</button>
-    <button class="secondary" onclick="window.open('https://video1.getstreamhosting.com:1936/pexrejaeyz/pexrejaeyz/playlist.m3u8', '_blank')">📺 HMTV (Chrome)</button>
+    <p style="text-align:center; margin-top:16px;"><strong>Sports & More</strong></p>
+    <button class="primary" onclick="playVideo('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8')">📺 Red Bull TV (Sports)</button>
+    <button class="secondary" onclick="window.open('https://www.youtube.com/c/SairaMovies/live', '_blank')">📺 Saira Movies (YouTube)</button>
+    <button class="secondary" onclick="window.open('https://pluto.tv/en/live-tv/category/sports', '_blank')">📺 Pluto TV Sports (Browser)</button>
   </div>
 
   <div id="player-screen" class="hidden">
@@ -42,7 +50,7 @@
       <video id="vid" controls playsinline disablepictureinpicture controlsList="nodownload"></video>
       <div id="wm" class="watermark"></div>
     </div>
-    <p class="info">Forensic watermark active</p>
+    <p class="info">Forensic watermark active – recording leaks are traceable</p>
     <button class="text-btn" onclick="closePlayer()">← Back to Wallet</button>
   </div>
 
@@ -52,7 +60,6 @@
 
     const API = "https://zazu-backend-1.onrender.com";
 
-    // Load wallet
     async function loadWallet() {
       const u = tg.initDataUnsafe?.user;
       if (!u) { document.getElementById('bal-val').textContent = "0.00"; return; }
@@ -93,7 +100,7 @@
 
       if (Hls.isSupported()) {
         if (hls) hls.destroy();
-        hls = new Hls({ enableWorker: true });
+        hls = new Hls({ enableWorker: true, lowLatencyMode: false });
         hls.loadSource(url);
         hls.attachMedia(vid);
         hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play().catch(()=>{}));
