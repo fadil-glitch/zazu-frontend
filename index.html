@@ -20,6 +20,7 @@
     .watermark { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; font-family:monospace; font-size:14px; color:rgba(255,255,255,0.25); white-space:nowrap; animation:drift 22s linear infinite; z-index:10; }
     @keyframes drift { 0%{transform:translate(-100%,-100%)} 25%{transform:translate(0,0)} 50%{transform:translate(100%,100%)} 75%{transform:translate(0,200%)} 100%{transform:translate(-100%,100%)} }
     .info { text-align:center; font-size:13px; opacity:0.7; margin-bottom:8px; }
+    .section-title { text-align:center; margin-top:24px; margin-bottom:8px; font-weight:bold; opacity:0.8; }
   </style>
 </head>
 <body>
@@ -27,22 +28,21 @@
     <h2>💰 Your Wallet</h2>
     <div class="bal">₦<span id="bal-val">0.00</span></div>
 
-    <p style="text-align:center; margin-top:16px;"><strong>Test Stream</strong></p>
+    <div class="section-title">Test Stream</div>
     <button class="primary" onclick="playVideo('https://www.w3schools.com/html/mov_bbb.mp4')">📺 Test Video (Mini App)</button>
     <button class="secondary" onclick="window.open('https://www.w3schools.com/html/mov_bbb.mp4', '_blank')">📺 Test Video (Chrome)</button>
 
-    <p style="text-align:center; margin-top:16px;"><strong>Live Channels (HLS)</strong></p>
-    <button class="primary" onclick="playVideo('https://bit.ly/Arewa24-Live-HLS')">📺 Arewa 24 (Hausa)</button>
-    <button class="primary" onclick="playVideo('https://live.presstv.ir/hls/test.m3u8')">📺 Press TV</button>
-    <button class="primary" onclick="playVideo('https://live-hls-web-aje.akamaized.net/m3u8/aje.m3u8')">📺 Al Jazeera English</button>
-    <button class="primary" onclick="playVideo('https://bit.ly/ChannelsTV-Live-M3U8')">📺 Channels TV (Nigeria)</button>
-    <button class="primary" onclick="playVideo('https://tv-trtworld.medyahizmetleri.com/index.m3u8')">📺 TRT World</button>
-    <button class="primary" onclick="playVideo('https://static.france24.com/live/f24_en.error/playlist.m3u8')">📺 France 24</button>
-
-    <p style="text-align:center; margin-top:16px;"><strong>Sports & More</strong></p>
+    <div class="section-title">Live Channels (Stable Test Streams)</div>
+    <button class="primary" onclick="playVideo('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">📺 Mux HLS Test</button>
+    <button class="primary" onclick="playVideo('https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8')">📺 Akamai HLS Test</button>
     <button class="primary" onclick="playVideo('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8')">📺 Red Bull TV (Sports)</button>
-    <button class="secondary" onclick="window.open('https://www.youtube.com/c/SairaMovies/live', '_blank')">📺 Saira Movies (YouTube)</button>
-    <button class="secondary" onclick="window.open('https://pluto.tv/en/live-tv/category/sports', '_blank')">📺 Pluto TV Sports (Browser)</button>
+    <button class="secondary" onclick="window.open('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8', '_blank')">📺 Red Bull TV (Chrome)</button>
+
+    <div class="section-title">Coming Soon (via IPTV Auto‑Update)</div>
+    <button class="primary" disabled style="opacity:0.5;">📺 Arewa 24 (Backend Proxy Ready Soon)</button>
+    <button class="primary" disabled style="opacity:0.5;">📺 Channels TV (Backend Proxy Ready Soon)</button>
+    <button class="primary" disabled style="opacity:0.5;">📺 Al Jazeera (Backend Proxy Ready Soon)</button>
+    <button class="primary" disabled style="opacity:0.5;">📺 Saira Movies (Backend Proxy Ready Soon)</button>
   </div>
 
   <div id="player-screen" class="hidden">
