@@ -21,6 +21,7 @@
     @keyframes drift { 0%{transform:translate(-100%,-100%)} 25%{transform:translate(0,0)} 50%{transform:translate(100%,100%)} 75%{transform:translate(0,200%)} 100%{transform:translate(-100%,100%)} }
     .info { text-align:center; font-size:13px; opacity:0.7; margin-bottom:8px; }
     .section-title { text-align:center; margin-top:24px; margin-bottom:8px; font-weight:bold; opacity:0.8; }
+    #channel-list { margin-top:8px; }
   </style>
 </head>
 <body>
@@ -28,21 +29,10 @@
     <h2>💰 Your Wallet</h2>
     <div class="bal">₦<span id="bal-val">0.00</span></div>
 
-    <div class="section-title">Test Stream</div>
-    <button class="primary" onclick="playVideo('https://www.w3schools.com/html/mov_bbb.mp4')">📺 Test Video (Mini App)</button>
-    <button class="secondary" onclick="window.open('https://www.w3schools.com/html/mov_bbb.mp4', '_blank')">📺 Test Video (Chrome)</button>
-
-    <div class="section-title">Live Channels (Stable Test Streams)</div>
-    <button class="primary" onclick="playVideo('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">📺 Mux HLS Test</button>
-    <button class="primary" onclick="playVideo('https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8')">📺 Akamai HLS Test</button>
-    <button class="primary" onclick="playVideo('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8')">📺 Red Bull TV (Sports)</button>
-    <button class="secondary" onclick="window.open('https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8', '_blank')">📺 Red Bull TV (Chrome)</button>
-
-    <div class="section-title">Coming Soon (via IPTV Auto‑Update)</div>
-    <button class="primary" disabled style="opacity:0.5;">📺 Arewa 24 (Backend Proxy Ready Soon)</button>
-    <button class="primary" disabled style="opacity:0.5;">📺 Channels TV (Backend Proxy Ready Soon)</button>
-    <button class="primary" disabled style="opacity:0.5;">📺 Al Jazeera (Backend Proxy Ready Soon)</button>
-    <button class="primary" disabled style="opacity:0.5;">📺 Saira Movies (Backend Proxy Ready Soon)</button>
+    <div class="section-title">Live Channels</div>
+    <div id="channel-list">
+      <p style="text-align:center;opacity:0.6;">Loading channels...</p>
+    </div>
   </div>
 
   <div id="player-screen" class="hidden">
@@ -60,6 +50,7 @@
 
     const API = "https://zazu-backend-1.onrender.com";
 
+    // Load wallet
     async function loadWallet() {
       const u = tg.initDataUnsafe?.user;
       if (!u) { document.getElementById('bal-val').textContent = "0.00"; return; }
@@ -71,7 +62,37 @@
         }
       } catch(e) {}
     }
+
+    // Load channels from backend
+    async function loadChannels() {
+      const container = document.getElementById('channel-list');
+      try {
+        const res = await fetch(API + '/api/channels');
+        if (res.ok) {
+          const data = await res.json();
+          const channels = data.channels || [];
+          container.innerHTML = '';
+          if (channels.length === 0) {
+            container.innerHTML = '<p style="text-align:center;opacity:0.6;">No channels available yet.</p>';
+            return;
+          }
+          channels.forEach(ch => {
+            const btn = document.createElement('button');
+            btn.className = 'primary';
+            btn.textContent = '📺 ' + ch.name;
+            btn.onclick = () => playVideo(ch.hls_url);
+            container.appendChild(btn);
+          });
+        } else {
+          container.innerHTML = '<p style="text-align:center;opacity:0.6;">Failed to load channels.</p>';
+        }
+      } catch(e) {
+        container.innerHTML = '<p style="text-align:center;opacity:0.6;">Failed to load channels.</p>';
+      }
+    }
+
     loadWallet();
+    loadChannels();
 
     let hls = null;
 
