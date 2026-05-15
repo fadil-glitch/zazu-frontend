@@ -102,36 +102,52 @@
     }
 
     function playVideo(streamUrl) {
-      show('player-screen');
-      const vid = document.getElementById('vid');
-      const wm = document.getElementById('wm');
+    function playVideo(streamUrl) {
+  show('player-screen');
+  const vid = document.getElementById('vid');
+  const wm = document.getElementById('wm');
 
-      const updateWm = () => {
-        wm.textContent = 'ZAZU:' + (tg.initDataUnsafe?.user?.id || 'unknown') + '|' + new Date().toLocaleTimeString() + ' ';
-      };
-      updateWm();
-      setInterval(updateWm, 1500);
+  const updateWm = () => {
+    wm.textContent = 'ZAZU:' + (tg.initDataUnsafe?.user?.id || 'unknown') + '|' + new Date().toLocaleTimeString() + ' ';
+  };
+  updateWm();
+  setInterval(updateWm, 1500);
 
-      // Always treat as HLS since the proxy returns .m3u8
+  // Stop any previous playback
+  if (hls) { hls.destroy(); hls = null; }
+  vid.src = '';
+  vid.removeAttribute('src');
+
+  // Fetch the stream to check content type
+  fetch(streamUrl, { method: 'HEAD' }).then(resp => {
+    const contentType = resp.headers.get('Content-Type') || '';
+
+    if (contentType.includes('video/mp4') || contentType.includes('video/webm')) {
+      // Direct MP4 – set source and play
+      vid.src = streamUrl;
+      vid.play().catch(() => {});
+    } else {
+      // Assume HLS – use hls.js
       if (Hls.isSupported()) {
-        if (hls) hls.destroy();
         hls = new Hls({ enableWorker: true, lowLatencyMode: false });
         hls.loadSource(streamUrl);
         hls.attachMedia(vid);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play().catch(()=>{}));
+        hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play().catch(() => {}));
       } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
         vid.src = streamUrl;
-        vid.play().catch(()=>{});
+        vid.play().catch(() => {});
       }
     }
-
-    function closePlayer() {
-      if (hls) { hls.destroy(); hls = null; }
-      const vid = document.getElementById('vid');
-      vid.src = '';
-      vid.removeAttribute('src');
-      show('wallet-screen');
+  }).catch(() => {
+    // HEAD request failed – fallback to HLS
+    if (Hls.isSupported()) {
+      hls = new Hls({ enableWorker: true, lowLatencyMode: false });
+      hls.loadSource(streamUrl);
+      hls.attachMedia(vid);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play().catch(() => {}));
+    } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+      vid.src = streamUrl;
+      vid.play().catch(() => {});
     }
-  </script>
-</body>
-</html>
+  });
+}
